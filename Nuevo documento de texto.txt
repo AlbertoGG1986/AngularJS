@@ -1,0 +1,7 @@
+<div class="card text-center bg-light mb-2 mr-2" ng-repeat="carta in cartas2 | orderBy: order | filter:search">
+                        <img ng-src="{{carta.image_uris.small}}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{carta.name}}</h5>
+                            <p class="card-text">{{carta.flavor_text}}</p>
+                        </div>
+                    </div>

@@ -1,0 +1,4 @@
+<div class="btn-group" style="width:100%" ng-if="1 < pages.length || !autoHide">
+    <button class="btn btn-primary" ng-click="setCurrent(pagination.current - 1)" ng-if="directionLinks" ng-class="{}">Previous page</button>
+    <button class="btn btn-primary" ng-click="setCurrent(pagination.current + 1)" ng-if="directionLinks" ng-class="{}">Next page</button>
+</div>

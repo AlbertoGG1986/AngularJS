@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es" ng-app="API">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS  & pagination-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript " src="js/angular.min.js "></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="//morgul.github.io/ui-bootstrap4/ui-bootstrap-tpls-3.0.6.js"></script>
+    <script src="js/dirPagination.js"></script>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Roboto|Satisfy&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="angular.css">
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+    <title>Magic the Gathering</title>
+</head>
+
+<body ng-controller="MTGController">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3"><img src="images/logo.png" width="220" ng-click="reloadRoute()"></div>
+            <div class="col-lg-6" id="titulo">
+                <h1> MTG Standard Database </h1>
+            </div>
+            <div class="col-lg-3" id="titulo">
+                <button class="btn btn-primary" ng-click="vista = true" id="mobile"><img src="images/grid.png"></button>
+                <button class="btn btn-primary" ng-click="vista = false" id="mobile"><img src="images/list.png"></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <table id="opciones" class="table table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>OPTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="colect">Pick a set</label>
+                                    <select class="form-control" id="set" ng-options="set as set.name for set in sets" ng-model="selectedItem" ng-change="update()"></select>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>SEARCH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-model="search.name" placeholder="Card Name">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="order" class="table table-striped">
+                    <tbody>
+                        <div>
+                            <button class="btn btn-primary btn-block" ng-click="orden = 'name'">Alphabetical order</button>
+                            <button class="btn btn-primary btn-block" ng-click="orden = '-name'">Reverse alphabetical order</button>
+                            <button class="btn btn-primary btn-block" ng-click="orden = 'cmc'">Converted Mana Cost</button>
+                        </div>
+                    </tbody>
+                </table>
+                <table class="table table-striped" id="mobile">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>CARDS SHOWN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td ng-model="counted">
+                                There are {{cartas.length}} cards in total<br>in the {{selectedItem.name}} set
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table table-striped" id="mobile">
+                    <table>
+                        <tbody>
+                            <dir-pagination-controls boundary-links="true" template-url="js/dirPagination2.tpl.html"></dir-pagination-controls>
+
+                            <button class="btn btn-primary btn-block" ng-click="clear()">Clear</button>
+                        </tbody>
+                    </table>
+                </div>
+                <table id="filtroColor" class="table table-striped" ng-hide='esconder'>
+                    <thead class="thead-light">
+                        <tr>
+                            <th>COLOUR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="color">Pick a colour</label>
+                                    <select class="form-control" id="color">
+                                            <option value="0">(Pick a colour)</option>
+                                        </select>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="azul" checked>
+                                    <label class="form-check-label" for="color1">Blue</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="negro" checked>
+                                    <label class="form-check-label" for="color2">Black</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="verde" checked>
+                                    <label class="form-check-label" for="color3">Green</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="rojo" checked>
+                                    <label class="form-check-label" for="color4">Red</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="blanco" checked>
+                                    <label class="form-check-label" for="color5">White</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table id="filtroTipo" class="table table-striped" ng-hide='esconder'>
+                    <thead class="thead-light">
+                        <tr>
+                            <th>TYPE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="tipo">Pick a type</label>
+                                    <select class="form-control" id="disp">
+                                        <option value="0">(Pick a type)</option>
+                                    </select>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="tec1" checked>
+                                    <label class="form-check-label" for="tipo1">Creature</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="tec2" checked>
+                                    <label class="form-check-label" for="tipo2">Planeswalker</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="tec2" checked>
+                                    <label class="form-check-label" for="tipo3">Artifact</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- CARTAS -->
+            <div id="cartas" class="col-lg-9">
+                <div class="row row-cols-md-5" ng-show="vista">
+                    <div class="card text-center mb-2 mr-2" dir-paginate="carta in cartas | filter:search | orderBy: orden | itemsPerPage: 8">
+                        <img ng-src="{{carta.image_uris.png}}" class="card-img-top">
+                        <div class="card-body" ng-click="">
+                            <h5 class="card-title">{{carta.name}}</h5>
+                            <a ng-href="{{carta.scryfall_uri}}" target="_blank">Check {{carta.name}} on Scryfall</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-md-3" ng-show="!vista" dir-paginate="carta in cartas | filter:search | orderBy: orden | itemsPerPage: 1">
+
+                    <!-- GALERIA-->
+                    <gallery></gallery>
+                    <!-- GALERIA-->
+
+                    <div ng-controller="TabsController">
+                        <ul class=" nav nav-pills ">
+                            <li>
+                                <button class="btn btn-primary " ng-click="setCurrentTab(0) " href="# " data-toggle="tab ">Info</button>
+                            </li>
+                            <li>
+                                <button class="btn btn-primary " ng-click="setCurrentTab(1) " href="# " data-toggle="tab ">Flavor Text</button>
+                            </li>
+                            <li>
+                                <button class="btn btn-primary " ng-click="setCurrentTab(2) " href="# " data-toggle="tab ">Review</button>
+                            </li>
+                        </ul>
+                        <div ng-show="isCurrent(0) ">
+                            <h3>Info</h3>
+                            <p>Rarity: {{carta.rarity}}</p>
+                            <p>Type: {{carta.type_line}}</p>
+                            <p>Colors: {{carta.colors}}</p>
+                            <p>Mana cost: {{carta.mana_cost}}</p>
+                        </div>
+                        <div ng-show="isCurrent(1) ">
+                            <h3>Flavor text</h3>
+                            <p>{{carta.flavor_text}}</p>
+                        </div>
+                        <div ng-show="isCurrent(2) ">
+                            <h3>Review</h3>
+                            <form novalidate>
+                                <fieldset class="form-group ">
+                                    <select class="form-control " ng-model="stars " ng-options="stars for stars in [5, 4, 3, 2, 1] ">
+                                        <option value=" ">Rate the Product</option>
+                                    </select>
+                                </fieldset>
+                                <fieldset class="form-group ">
+                                    <textarea ng-model="body " class="form-control " placeholder="Write an opinion "></textarea>
+                                </fieldset>
+                                <fieldset class="form-group ">
+                                    <input ng-model="author " class="form-control " type="email " placeholder="Write a valid email "></input>
+                                </fieldset>
+                                <fieldset class="form-group ">
+                                    <input type="submit " class="btn btn-primary " value="Submit Review " />
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="mobile2">
+            <table class="table table-striped">
+                <tbody>
+                    <dir-pagination-controls boundary-links="true" template-url="js/dirPagination2.tpl.html"></dir-pagination-controls>
+
+                    <button class="btn btn-primary btn-block" ng-click="clear()">Clear</button>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- .row -->
+    </div>
+    <!-- .container -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js " integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n " crossorigin="anonymous "></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js " integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo " crossorigin="anonymous "></script>
+    <!-- JavaScript -->
+    <script type="text/javascript " src="js/ejercicioAlberto.js "></script>
+</body>
+
+</html>

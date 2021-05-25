@@ -1,0 +1,66 @@
+* {
+    color: #2C4054;
+}
+
+body {
+    font-family: 'Bree Serif';
+    background-color: #95AEAF;
+}
+
+.container {
+    background-color: #859EA7;
+}
+
+#titulo {
+    display: flex;
+    align-self: flex-end;
+}
+
+.thead-light {
+    background-color: #EEE9D8;
+}
+
+.content {
+    text-align: center;
+}
+
+.card-body {
+    background-color: #95AEAF;
+}
+
+button.btn-primary {
+    background-color: #6C6B88;
+    border-color: #EEE9D8;
+}
+
+button.btn-primary:hover {
+    background-color: #2C4054;
+    border-color: #EEE9D8;
+}
+
+button.btn-primary:focus {
+    background-color: #2C4054;
+    border-color: #EEE9D8;
+}
+
+ul {
+    list-style: none;
+}
+
+#mobile2 {
+    display: none;
+}
+
+.card-img-top {
+    background-color: #95AEAF;
+}
+
+@media only screen and (max-width: 600px) {
+    /* For mobile phones: */
+    #mobile {
+        display: none;
+    }
+    #mobile2 {
+        display: block;
+    }
+}

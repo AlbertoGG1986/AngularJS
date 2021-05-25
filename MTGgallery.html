@@ -1,0 +1,34 @@
+<div class="card text-center mb-2 mr-2" ng-controller="GalleryController">
+    <a ng-href="{{carta.scryfall_uri}}" target="_blank"><img ng-src="{{carta.image_uris.png}}" class="card-img-top"></a>
+    <div class="card-body">
+        <h3 class="card-title">{{carta.name}}</h3>
+        <!--<p class="card-text">{{carta.flavor_text}}</p>-->
+        <table>
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="4">Click on the big image to go to Scryfall</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="4">Click on the fourth link to download PNG image</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="4">Click on the rest for image links</td>
+            </tr>
+            <tr>
+                <td valign="middle" align="center" ng-repeat="image in carta.image_uris">
+                    <a ng-href="{{image}}" target="_blank"><img src="{{image}}" width="120" /></a>
+                </td>
+            </tr>
+            <tr>
+                <td>Small</td>
+                <td>Normal</td>
+                <td>Large</td>
+                <td>PNG</td>
+                <td>Art crop</td>
+                <td>Border crop</td>
+            </tr>
+        </table>
+    </div>
+</div>
